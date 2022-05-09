@@ -182,7 +182,7 @@ crossorigin="anonymous"></script>
 
           for (let i = 0; i <rows.length; i++) {
             let title = rows[i]['title']
-            let image = rows[i]['image']
+            let url = rows[i]['url']
             let star = rows[i]['star']
             let comment = rows[i]['comment']
 
@@ -190,7 +190,7 @@ crossorigin="anonymous"></script>
 
             let temp_html = ` <div class="col">
                                   <div class="card">
-                                    <img src="${image}"
+                                    <img src="${url}"
                                          class="card-img-top" alt="...">
                                     <div class="card-body">
                                       <h5 class="card-title">${title}</h5>
