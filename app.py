@@ -22,19 +22,24 @@ def web_ec_post():
    star_recevie = request.form['star_give']
    comment_recevie = request.form['comment_give']
 
+   # 1. 다 가져와서 데이터를 저장해놓고 사용하는 방법
+   # 2. 그때그때 db.select();
+
    doc = {
       'url': url_recevie,
+      'sort': 'movie',
       'title': title_recevie,
       'star': star_recevie,
       'comment': comment_recevie
    }
 
-   db.ec.insert_one(doc)
+   db.cultures.insert_one(doc)
    return jsonify({'msg' : '기록 완료!'})
 
 @app.route('/ec', methods=['GET'])
 def web_ec_get():
-   post_list = list(db.ec.find({}, {'_id': False}))
+   post_list = list(db.movies.find({}, {'_id': False}))
+
    return jsonify({'posting': post_list})
 
 
