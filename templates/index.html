@@ -172,7 +172,7 @@ crossorigin="anonymous"></script>
     });
 
     function listing() {
-       // $('#card-box').empty()
+       $('#card-box').empty()
       $.ajax({
         type: "GET",
         url: "ec",
@@ -190,8 +190,7 @@ crossorigin="anonymous"></script>
 
             let temp_html = ` <div class="col">
                                   <div class="card">
-                                    <img src="${image}"
-                                         class="card-img-top" alt="...">
+                                    <img src="${image}" class="card-img-top" alt="...">
                                     <div class="card-body">
                                       <h5 class="card-title">${title}</h5>
                                       <p>${star_image}</p>
