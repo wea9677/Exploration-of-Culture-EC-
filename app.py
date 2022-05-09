@@ -27,18 +27,17 @@ def web_ec_post():
 
    doc = {
       'url': url_recevie,
-      'sort': 'movie',
       'title': title_recevie,
       'star': star_recevie,
       'comment': comment_recevie
    }
 
-   db.cultures.insert_one(doc)
+   db.ec.insert_one(doc)
    return jsonify({'msg' : '기록 완료!'})
 
 @app.route('/ec', methods=['GET'])
 def web_ec_get():
-   post_list = list(db.movies.find({}, {'_id': False}))
+   post_list = list(db.ec.find({}, {'_id': False}))
 
    return jsonify({'posting': post_list})
 
