@@ -1,0 +1,33 @@
+* {
+    font-family: 'Gowun Dodum', sans-serif;
+}
+
+h1 {
+    margin: 10px auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.update {
+    width: 95%;
+    max-width: 500px;
+    margin: 20px auto 0px auto;
+    padding: 20px;
+    box-shadow: 0px 0px 3px 0px gray;
+}
+
+.btns {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 20px;
+}
+
+.btns > button {
+    margin-right: 10px;
+}
