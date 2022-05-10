@@ -95,3 +95,7 @@ html, body {
 .card-box:hover > .option{
     visibility: visible;
 }
+
+.menu_box > button {
+    margin-right: 15px;
+}

@@ -18,6 +18,10 @@ db = client.dbsparta
 def home():
     return render_template('index.html')
 
+@app.route('/culture/update')
+def update():
+   num = request.args.get('num')
+   return render_template('update.html', num=num)
 
 @app.route('/culture', methods=['POST'])
 def web_culture_post():
@@ -72,11 +76,6 @@ def web_culture_gettype():
     ctype = request.args.get('str')
     post_list = list(db.culture.find({'ctype': ctype}, {'_id': False}))
 
-    # if ctype == 'all':
-    #    post_list = list(db.culture.find({}, {'_id': False}))
-    # else:
-    #    post_list = list(db.culture.find({}, {'_id': False, 'ctype': ctype}))
-
     return jsonify({'posting': post_list})
 
 @app.route("/culture", methods=["PUT"])
@@ -86,12 +85,15 @@ def movie_update():
     star_receive = request.form['star_give']
     comment_receive = request.form['comment_give']
 
+    title_receive = request.form['title_give']
+    ctype_receive = request.form['ctype_give']
+
     if url_receive is None :
         db.culture.update_one({'num': int(num_receive)},
-                             {'$set': {'star': star_receive, 'comment': comment_receive}});
+                             {'$set': {'star': star_receive, 'comment': comment_receive, 'title':title_receive, 'ctype':ctype_receive}});
     else:
         db.culture.update_one({'num': int(num_receive)},
-                             {'$set': {'url': url_receive, 'star': star_receive, 'comment': comment_receive}});
+                             {'$set': {'url': url_receive, 'star': star_receive, 'comment': comment_receive, 'title':title_receive, 'ctype':ctype_receive}});
 
     return jsonify({'msg': '수정 완료!'});
 

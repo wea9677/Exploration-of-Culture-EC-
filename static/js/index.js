@@ -83,7 +83,7 @@ function close_box() {
 function dropList(n) {
     $.ajax({
         type: 'DELETE',
-        url: `/movie`,
+        url: `/culture`,
         data: {num_give: n},
         success: function (response) {
             alert(response['msg'])
@@ -93,6 +93,6 @@ function dropList(n) {
 }
 
 function updateCard(n) {
-    window.open(`http://localhost:5000/update?num=${n}`, 'new', 'scrollbars=yes,resizable=no width=600 height=450, left=0,top=0\');return false')
+    window.open(`http://localhost:5000/culture/update?num=${n}`, 'new', 'scrollbars=yes,resizable=no width=640 height=560, left=0,top=0\');return false')
 }
 

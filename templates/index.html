@@ -189,7 +189,13 @@
 
 
         function login() {
-            $('#login-box').show()
+            let val = $('#loginBtn').text();
+            if(val === '로그아웃'){
+                window.location.href = '/';
+            }else{
+                $('#loginBtn').text('로그아웃');
+                $('#signUpBtn').css('display', 'none');
+            }
 
         }
 
@@ -264,8 +270,8 @@
 <body>
 <div class="section1">
     <div class="d-grid gap-2 d-md-block menu_box">
-        <button class="btn btn-primary" type="button" onclick="login()">로그인</button>
-        <button class="btn btn-primary" type="button" onclick="sign_up()">회원가입</button>
+        <button id="loginBtn" class="btn btn-primary" type="button" onclick="login()">로그인</button>
+        <button id="signUpBtn" class="btn btn-primary" type="button" onclick="sign_up()">회원가입</button>
     </div>
     <a href="#">
         <div class="image_box"></div>

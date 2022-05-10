@@ -13,6 +13,8 @@ function updateBox(){
 
     let num = result['num'];
     let url = $('#url').val();
+    let title = $('#title').val();
+    let ctype = $('#ctype').val();
     let star = $('#star').val();
     let comment = $('#comment').val();
     /* NULL CHECK */
@@ -28,7 +30,7 @@ function updateBox(){
     $.ajax({
         type: 'PUT',
         url: '/culture',
-        data: {num_give : num, url_give: url, star_give: star, comment_give: comment},
+        data: {num_give : num, url_give: url, star_give: star, comment_give: comment, title_give: title, ctype_give: ctype},
         success: function (response) {
             alert(response['msg'])
             opener.window.location.reload("/");
