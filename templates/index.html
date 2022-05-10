@@ -203,9 +203,9 @@
         }
 
 
-        // $(document).ready(function () {
-        //     listing();
-        // });
+        $(document).ready(function () {
+            listing();
+        }, {once: true});
 
         function listing() {
             $('#card-box').empty()
@@ -272,7 +272,7 @@
             $('#card-box').empty()
             $.ajax({
                 type: "GET",
-                url: `/culture/ctype?str=${str}`,
+                url: `/culture/type?str=${str}`,
                 data: {},
                 success: function (response) {
                     let rows = response['posting']
@@ -323,7 +323,6 @@
         function deleat() {
             $('')
         }
-        listing()
 
     </script>
 
@@ -393,70 +392,7 @@
 </div>
 <div class="wrap">
     <div class="row row-cols-1 row-cols-md-4 g-4" id="card-box">
-        <div class="col">
-            <div class="card">
-                <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                     class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">여기에 제목이 들어갑니다.</h5>
-                    <p class="card-text">여기에 내용이 들어가지요</p>
-                    <p>⭐⭐⭐</p>
-                    <p class="mycommnt">여기에 코멘트가 들어갑니다.</p>
-                    <div class="card_box_btn">
-                        <button type="button" class="btn btn-dark" onclick="">수정하기</button>
-                        <button type="button" class="btn btn-light" onclick="deleat()">삭제</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                     class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">여기에 제목이 들어갑니다.</h5>
-                    <p class="card-text">여기에 내용이 들어가지요</p>
-                    <p>⭐⭐⭐</p>
-                    <p class="mycommnt">여기에 코멘트가 들어갑니다.</p>
-                    <div class="card_box_btn">
-                        <button type="button" class="btn btn-dark" onclick="">수정하기</button>
-                        <button type="button" class="btn btn-light" onclick="">삭제</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                     class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">여기에 제목이 들어갑니다.</h5>
-                    <p class="card-text">여기에 내용이 들어가지요</p>
-                    <p>⭐⭐⭐</p>
-                    <p class="mycommnt">여기에 코멘트가 들어갑니다.</p>
-                    <div class="card_box_btn">
-                        <button type="button" class="btn btn-dark" onclick="">수정하기</button>
-                        <button type="button" class="btn btn-light" onclick="">삭제</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="col">
-            <div class="card">
-                <img src="https://movie-phinf.pstatic.net/20210728_221/1627440327667GyoYj_JPEG/movie_image.jpg"
-                     class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">여기에 제목이 들어갑니다.</h5>
-                    <p class="card-text">여기에 내용이 들어가지요</p>
-                    <p>⭐⭐⭐</p>
-                    <p class="mycommnt">여기에 코멘트가 들어갑니다.</p>
-                    <div class="card_box_btn">
-                        <button type="button" class="btn btn-dark" onclick="">수정하기</button>
-                        <button type="button" class="btn btn-light" onclick="">삭제</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+
     </div>
 </div>
 </body>
