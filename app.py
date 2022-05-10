@@ -63,12 +63,14 @@ def web_culture_get():
 @app.route('/culture/ctype', methods=['GET'])
 def web_culture_gettype():
 
+
    ctype = request.args.get('str')
-   print(ctype)
-   if ctype == 'all':
-      post_list = list(db.culture.find({}, {'_id': False}))
-   else:
-      post_list = list(db.culture.find({}, {'_id': False, 'ctype': ctype}))
+   post_list = list(db.culture.find({'ctype': ctype}, {'_id': False}))
+
+   # if ctype == 'all':
+   #    post_list = list(db.culture.find({}, {'_id': False}))
+   # else:
+   #    post_list = list(db.culture.find({}, {'_id': False, 'ctype': ctype}))
 
    return jsonify({'posting': post_list})
 
