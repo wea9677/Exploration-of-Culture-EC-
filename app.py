@@ -18,12 +18,15 @@ def home():
    return render_template('index.html')
 
 
-@app.route('/ec', methods=['POST'])
+@app.route('/culture', methods=['POST'])
 def web_ec_post():
    url_recevie = request.form['url_give']
    title_recevie = request.form['title_give']
    star_recevie = request.form['star_give']
    comment_recevie = request.form['comment_give']
+
+   ctype_recevie = request.form['ctype_give']
+   print(ctype_recevie)
 
    headers = {
       'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
@@ -42,17 +45,33 @@ def web_ec_post():
       'url': url_recevie,
       'title': title_recevie,
       'star': star_recevie,
-      'comment': comment_recevie
+      'comment': comment_recevie,
+      'ctype': ctype_recevie
    }
 
-   db.ec.insert_one(doc)
+   db.culture.insert_one(doc)
    return jsonify({'msg' : '기록 완료!'})
 
-@app.route('/ec', methods=['GET'])
-def web_ec_get():
-   post_list = list(db.ec.find({}, {'_id': False}))
+@app.route('/culture', methods=['GET'])
+def web_culture_get():
+
+
+   post_list = list(db.culture.find({}, {'_id': False}))
 
    return jsonify({'posting': post_list})
+
+@app.route('/culture/ctype', methods=['GET'])
+def web_culture_gettype():
+
+   ctype = request.args.get('str')
+   print(ctype)
+   if ctype == 'all':
+      post_list = list(db.culture.find({}, {'_id': False}))
+   else:
+      post_list = list(db.culture.find({}, {'_id': False, 'ctype': ctype}))
+
+   return jsonify({'posting': post_list})
+
 
 
 if __name__ == '__main__':
