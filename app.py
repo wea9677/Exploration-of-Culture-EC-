@@ -9,8 +9,7 @@ from pymongo import MongoClient
 import certifi
 
 ca = certifi.where()
-client = MongoClient('mongodb+srv://wea9677:tmxkdlfl@cluster0.xmzro.mongodb.net/Cluster0?retryWrites=true&w=majority',
-                     tlsCAFile=ca)
+client = MongoClient('mongodb+srv://wea9677:tmxkdlfl@cluster0.xmzro.mongodb.net/Cluster0?retryWrites=true&w=majority')
 
 db = client.dbsparta
 
@@ -42,9 +41,16 @@ def web_culture_post():
     # 1. 다 가져와서 데이터를 저장해놓고 사용하는 방법
     # 2. 그때그때 db.select();
 
+    culture_list = list(db.culture.find({}, {'_id': False}))
+    if len(culture_list) == 0:
+        count = len(culture_list) + 1
+    else:
+        count = culture_list[len(culture_list) - 1]['num'] + 1
+
     doc = {
-        'url': url_recevie,
+        'num': count,
         'title': title_recevie,
+        'url': url_recevie,
         'star': star_recevie,
         'comment': comment_recevie,
         'ctype': ctype_recevie
@@ -72,6 +78,28 @@ def web_culture_gettype():
     #    post_list = list(db.culture.find({}, {'_id': False, 'ctype': ctype}))
 
     return jsonify({'posting': post_list})
+
+@app.route("/culture", methods=["PUT"])
+def movie_update():
+    num_receive = request.form['num_give']
+    url_receive = request.form['url_give']
+    star_receive = request.form['star_give']
+    comment_receive = request.form['comment_give']
+
+    if url_receive is None :
+        db.culture.update_one({'num': int(num_receive)},
+                             {'$set': {'star': star_receive, 'comment': comment_receive}});
+    else:
+        db.culture.update_one({'num': int(num_receive)},
+                             {'$set': {'url': url_receive, 'star': star_receive, 'comment': comment_receive}});
+
+    return jsonify({'msg': '수정 완료!'});
+
+@app.route("/culture", methods=["DELETE"])
+def movie_delete():
+    num_receive = request.form['num_give']
+    db.culture.delete_one({'num': int(num_receive)})
+    return jsonify({'msg': '삭제 완료!'});
 
 
 if __name__ == '__main__':
