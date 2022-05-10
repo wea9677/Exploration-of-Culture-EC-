@@ -272,7 +272,7 @@
             $('#card-box').empty()
             $.ajax({
                 type: "GET",
-                url: `/culture/type?str=${str}`,
+                url: `/culture/ctype?str=${str}`,
                 data: {},
                 success: function (response) {
                     let rows = response['posting']
