@@ -30,242 +30,104 @@
     <title>문탐-문화탐방</title>
     <link rel="stylesheet" href="../static/css/index.css">
     <script src="../static/js/index.js"></script>
-    <style>
-        .section1 {
-            color: white;
-            width: 100%;
-            height: 350px;
 
-            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("https://www.jeongdong.or.kr/static/portal/img/HKPU_04_01_pic2.jpg");
-            background-size: cover;
-            background-position: center;
-            background-color: black;
+<!--    <script>-->
+<!--        function All() {-->
+<!--            listing()-->
+<!--        }-->
 
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-        }
+<!--        function theater() {-->
+<!--            getctype('theater')-->
+<!--        }-->
 
-        .menu_box {
-            margin: 5px 0px 0px auto
-        }
+<!--        function movies() {-->
+<!--            getctype('movies')-->
+<!--        }-->
 
-        .image_box {
-            min-width: 400px;
-            height: 200px;
-            background-image: url("../static/logo.png");
-            background-size: cover;
-        }
-
-        .section1 > button {
-            color: white;
-            border-radius: 20px;
-            border: solid 1px white;
-            background-color: transparent;
-            margin-top: 10px;
-        }
-
-        .section1 > button:hover {
-            border: solid 2px white;
-            color: white;
-            background-color: transparent;
-        }
+<!--        function consert() {-->
+<!--            getctype('consert')-->
+<!--        }-->
 
 
-        .category {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            margin: 10px 0 0px auto;
-            flex-direction: row;
-            justify-content: space-evenly;
-        }
+<!--        function login() {-->
+<!--            let val = $('#loginBtn').text();-->
+<!--            if (val === '로그아웃') {-->
+<!--                window.location.href = '/';-->
+<!--            } else {-->
+<!--                $('#loginBtn').text('로그아웃');-->
+<!--                $('#signUpBtn').css('display', 'none');-->
+<!--            }-->
 
-        .A_btn {
-            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAPcAAADMCAMAAACY78UPAAAAA1BMVEUAAACnej3aAAAASElEQVR4nO3BgQAAAADDoPlTX+AIVQEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAB8A8WgAAGQfErhAAAAAElFTkSuQmCC");
-            background-size: cover;
-            border: solid 1px black;
-            border-radius: 20px;
-            font-size: 40px;
-            color: white;
-        }
+<!--        }-->
 
-        .A_btn:hover {
-            color: #D94925
-        }
+<!--        function sign_up() {-->
+<!--            $('#sign-box').show()-->
 
-        .T_btn {
-            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("https://www.sfac.or.kr/images/sfac/space_main/@main1.jpg");
-            background-size: cover;
-            border: solid 1px black;
-            border-radius: 20px;
-            font-size: 40px;
-            color: white;
-        }
-
-        .T_btn:hover {
-            color: #D94925
-        }
-
-        .M_btn {
-            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj22fXfG02fTNTDThJodhTqwH21HDxJpx5Pg&usqp=CAU");
-            background-size: cover;
-            border: solid 1px black;
-            border-radius: 20px;
-            font-size: 40px;
-            color: white;
-        }
-
-        .M_btn:hover {
-            color: #D94925
-        }
-
-        .C_btn {
-            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("data:image/jpeg;base64,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");
-            background-size: cover;
-            border: solid 1px black;
-            border-radius: 20px;
-            font-size: 40px;
-            color: white;
-        }
-
-        .C_btn:hover {
-            color: #D94925
-        }
+<!--        }-->
 
 
-        .mycommnt {
-            color: #333333
-        }
+<!--        $(document).ready(function () {-->
+<!--            listing();-->
+<!--        }, {once: true});-->
 
-        .wrap {
-            max-width: 1200px;
-            margin: 20px auto 0 auto;
-        }
-
-        .section2 {
-            max-width: 500px;
-            height: 450px;
-            display: none;
-            margin: 20px auto 0 auto;
-            box-shadow: 0px 0px 3px 0px gray;
-            padding: 20px
-        }
-
-        .btn_box {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-            margin-top: 10px;
-        }
-
-        .btn_box > button {
-            margin-right: 10px;
-        }
+<!--        function getctype(str) {-->
+<!--            $('#card-box').empty()-->
+<!--            $.ajax({-->
+<!--                type: "GET",-->
+<!--                url: `/culture/ctype?str=${str}`,-->
+<!--                data: {},-->
+<!--                success: function (response) {-->
+<!--                    let rows = response['posting']-->
+<!--                    console.log(rows)-->
+<!--                    for (let i = 0; i < rows.length; i++) {-->
+<!--                        let num = rows[i]['num'];-->
+<!--                        let title = rows[i]['title']-->
+<!--                        let url = rows[i]['url']-->
+<!--                        let star = rows[i]['star']-->
+<!--                        let comment = rows[i]['comment']-->
 
 
-        .card_box_btn {
-            margin: auto 0 0 40px;
-        }
-    </style>
-    <script>
-        function All() {
-            listing()
-        }
-
-        function theater() {
-            getctype('theater')
-        }
-
-        function movies() {
-            getctype('movies')
-        }
-
-        function consert() {
-            getctype('consert')
-        }
+<!--                        let star_image = '⭐'.repeat(star)-->
 
 
-        function login() {
-            let val = $('#loginBtn').text();
-            if(val === '로그아웃'){
-                window.location.href = '/';
-            }else{
-                $('#loginBtn').text('로그아웃');
-                $('#signUpBtn').css('display', 'none');
-            }
+<!--                        let temp_html = `<div class="col card-box">-->
+<!--                                 <div class="card h-100">-->
+<!--                                     <img src="${url}" class="card-img-top">-->
+<!--                                     <div class="card-body">-->
+<!--                                         <h5 class="card-title">${title}</h5>-->
+<!--                                         <p>${star_image}</p>-->
+<!--                                         <p class="mycomment">${comment}</p>-->
+<!--                                     </div>-->
+<!--                                 </div>-->
+<!--                                 <div class="option">-->
+<!--                                     <a href="#" onclick="updateCard(${num});"><span class="las la-edit"></span></a>-->
+<!--                                     <a href="#" onclick="dropList(${num});"><span class="las la-trash"></span></a>-->
+<!--                                 </div>-->
+<!--                            </div>`;-->
 
-        }
-
-        function sign_up() {
-            $('#sign-box').show()
-
-        }
-
-
-        $(document).ready(function () {
-            listing();
-        }, {once: true});
-
-        function getctype(str) {
-            $('#card-box').empty()
-            $.ajax({
-                type: "GET",
-                url: `/culture/ctype?str=${str}`,
-                data: {},
-                success: function (response) {
-                    let rows = response['posting']
-                    console.log(rows)
-                    for (let i = 0; i < rows.length; i++) {
-                        let title = rows[i]['title']
-                        let url = rows[i]['url']
-                        let star = rows[i]['star']
-                        let comment = rows[i]['comment']
+<!--                        $('#card-box').append(temp_html);-->
+<!--                    }-->
+<!--                }-->
+<!--            })-->
 
 
-                        let star_image = '⭐'.repeat(star)
-
-                        let temp_html = ` <div class="col">
-                                  <div class="card">
-                                    <img src="${url}"
-                                         class="card-img-top" alt="...">
-                                    <div class="card-body">
-                                      <h5 class="card-title">${title}</h5>
-                                      <p>${star_image}</p>
-                                      <p class="mycommnt">${comment}</p>
-                                    <div class="card_box_btn">
-                                      <button type="button" class="btn btn-dark" onclick="">수정하기</button>
-                                      <button type="button" class="btn btn-light" onclick="deleat()">삭제</button>
-                                    </div>
-                                    </div>
-                                  </div>
-                                </div>`
-
-                        $('#card-box').append(temp_html)
-                    }
-                }
-            })
+<!--        }-->
 
 
-        }
+<!--        function open_box() {-->
+<!--            $('#post-box').show()-->
 
+<!--        }-->
 
-        function open_box() {
-            $('#post-box').show()
+<!--        function close_box() {-->
+<!--            $('#post-box').hide()-->
+<!--        }-->
 
-        }
+<!--        function deleat() {-->
+<!--            $('')-->
+<!--        }-->
 
-        function close_box() {
-            $('#post-box').hide()
-        }
-
-        function deleat() {
-            $('')
-        }
-
-    </script>
+<!--    </script>-->
 </head>
 <body>
 <div class="section1">

@@ -75,7 +75,7 @@ def web_culture_get():
 def web_culture_gettype():
     ctype = request.args.get('str')
     post_list = list(db.culture.find({'ctype': ctype}, {'_id': False}))
-
+    print(post_list)
     return jsonify({'posting': post_list})
 
 @app.route("/culture", methods=["PUT"])
