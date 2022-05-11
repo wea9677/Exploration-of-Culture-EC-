@@ -25,12 +25,13 @@ function login() {
     } else {
         $('#loginBtn').text('로그아웃');
         $('#signUpBtn').css('display', 'none');
+        window.location.href = '/login';
     }
 
 }
 
 function sign_up() {
-    $('#sign-box').show()
+    window.location.href = '/signup';
 
 }
 
@@ -168,13 +169,13 @@ function posting() {
     });
 }
 
-function open_box() {
-    $('#post-box').show()
-}
-
-function close_box() {
-    $('#post-box').hide()
-}
+// function open_box() {
+//     $('#post-box').show()
+// }
+//
+// function close_box() {
+//     $('#post-box').hide()
+// }
 
 function dropList(n) {
     $.ajax({
