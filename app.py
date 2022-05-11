@@ -32,6 +32,7 @@ def detail():
 
 
 
+
 @app.route('/culture/update')
 def update():
    num = request.args.get('num')
