@@ -2,6 +2,8 @@
     font-family: 'Gowun Dodum', sans-serif;
 }
 
+
+
 html, body {
     --shadow-small: 0 5px 10px rgba(0, 0, 0, 0.12);
     --shadow-large: 0 30px 60px rgba(0, 0, 0, 0.12);
@@ -60,18 +62,7 @@ html, body {
 /*    display: none;*/
 /*}*/
 
-/*.mybtns {*/
-/*    display: flex;*/
-/*    flex-direction: row;*/
-/*    align-items: center;*/
-/*    justify-content: center;*/
 
-/*    margin-top: 20px;*/
-/*}*/
-
-/*.mybtns > button {*/
-/*    margin-right: 10px;*/
-/*}*/
 
 
 .section1 {
@@ -175,6 +166,19 @@ html, body {
 
 .C_btn:hover {
     color: #D94925
+}
+
+.mybtns {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    margin-top: 20px;
+}
+
+.mybtns > button {
+    margin-right: 10px;
 }
 
 

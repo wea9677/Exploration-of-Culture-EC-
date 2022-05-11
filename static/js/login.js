@@ -4,12 +4,29 @@
 //     alert("{{ msg }}")
 // {% endif %}
 function sign_in() {
+    let username = $('#input-username').val()
+    let password = $('#input-password').val()
+    // if (username == "") {
+    //     $("#help-id-login").text("아이디를 입력해주세요.")
+    //     $("#input-username").focus()
+    //     return;
+    // } else {
+    //     $("#help-id-login").text("")
+    // }
+    //
+    // if (password == "") {
+    //     $("#help-password-login").text("비밀번호를 입력해주세요.")
+    //     $("#input-password").focus()
+    //     return;
+    // } else {
+    //     $("#help-password-login").text("")
+    // }
     $.ajax({
         type: "POST",
         url: "/sign_in",
         data: {
-            username_give: "",
-            password_give: ""
+            username_give: username,
+            password_give: password
         },
         success: function (response) {
             if (response['result'] == 'success') {
@@ -26,7 +43,7 @@ function sign_in() {
 }
 
 
-function sign_in() {
+function sign_up() {
     let username = $("#input-username").val()
     let password = $("#input-password").val()
 
@@ -47,15 +64,17 @@ function sign_in() {
     }
     $.ajax({
         type: "POST",
-        url: "/sign_in",
+        url: "/sign_up/save",
         data: {
             username_give: username,
             password_give: password
         },
         success: function (response) {
+
             if (response['result'] == 'success') {
-                $.cookie('mytoken', response['token'], {path: '/'});
+
                 window.location.replace("/")
+
             } else {
                 alert(response['msg'])
             }
@@ -81,6 +100,7 @@ function is_password(asValue) {
     var regExp = /^(?=.*\d)(?=.*[a-zA-Z])[0-9a-zA-Z!@#$%^&*]{8,20}$/;
     return regExp.test(asValue);
 }
+
 
 function check_dup() {
     let username = $("#input-username").val()

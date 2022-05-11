@@ -20,14 +20,16 @@ function consert() {
 
 function login() {
     let val = $('#loginBtn').text();
-    if (val === '로그아웃') {
-        window.location.href = '/';
-    } else {
-        $('#loginBtn').text('로그아웃');
-        $('#signUpBtn').css('display', 'none');
+    if (val === '로그인') {
         window.location.href = '/login';
     }
-
+    if (val === '로그아웃') {
+        let cookies = $.cookie();
+        for (var cookie in cookies) {
+            $.removeCookie(cookie);
+        }
+        window.location.reload();
+    }
 }
 
 function sign_up() {
@@ -35,9 +37,20 @@ function sign_up() {
 
 }
 
+function checkStatus() {
+    let status = $.cookie('mytoken');
+    if (status) {
+        $('#loginBtn').text('로그아웃');
+
+        $('#signUpBtn').css('display', 'none');
+    } else {
+        $('#loginBtn').text('로그인');
+    }
+}
 
 $(document).ready(function () {
     listing();
+    checkStatus();
 }, {once: true});
 
 function getctype(str) {
@@ -85,7 +98,28 @@ function getctype(str) {
 
 
 function open_box() {
+     if ($.cookie('mytoken')) {
+        /* NULL CHECK */
+        if (url == '') {
+            alert("URL IS NULL");
+            return;
+        }
+        if (comment == '') {
+            alert("comment IS NULL");
+            return;
+        }
+        if (star == '-- 선택하기 --') {
+            alert("SELECT STAR");
+            return;
+        }
+
+    } else {
+        alert('로그인해주세요')
+        return;
+    }
+
     $('#post-box').show()
+
 
 }
 
@@ -144,19 +178,6 @@ function posting() {
     let comment = $('#comment').val()
     let ctype = $('#ctype').val()
 
-    /* NULL CHECK */
-    if (url == '') {
-        alert("URL IS NULL");
-        return;
-    }
-    if (comment == '') {
-        alert("comment IS NULL");
-        return;
-    }
-    if (star == '-- 선택하기 --') {
-        alert("SELECT STAR");
-        return;
-    }
 
     $.ajax({
         type: 'POST',
@@ -167,6 +188,7 @@ function posting() {
             window.location.reload();
         }
     });
+
 }
 
 // function open_box() {

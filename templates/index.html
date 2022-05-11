@@ -22,11 +22,19 @@
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
             integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
             crossorigin="anonymous"></script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hi+Melody&family=Jua&display=swap');
+    </style>
     <title>문탐-문화탐방</title>
     <link rel="stylesheet" href="../static/css/index.css">
     <script src="../static/js/index.js"></script>
@@ -44,7 +52,7 @@
     </a>
     <!--      <h1 style="font-width: bold;"><span style="color:orangered">문</span>화</h1>-->
     <!--      <h1 style="font-width: bold;"><span style="color:orangered">탐</span>방</h1>-->
-    <button type="button" class="btn" onclick="open_box()">문탐 기록하기</button>
+    <button type="button" class="button is-warning" onclick="open_box()" style="font-family: 'Jua', sans-serif; font-size:25px">문탐 기록하기</button>
 
 </div>
 <div class="category">
@@ -55,18 +63,18 @@
 
 </div>
 <div class="section2" id="post-box">
-    <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="url" placeholder="url">
-        <label for="url">사진 URL</label>
+    <div class="form-floating mb-2">
+        <input type="email" class="input is-rounded" id="url" placeholder="사진 url">
+        <label for="url"></label>
     </div>
     <div class="form-floating mb-3">
-        <input type="email" class="form-control" id="title" placeholder="title">
-        <label for="url">제목</label>
+        <input type="email" class="input is-rounded" id="title" placeholder="제목">
+        <label for="url"></label>
     </div>
     <div class="input-group mb-3">
-        <label class="input-group-text" for="star">별점</label>
+        <label class="input-group-text" for="star" style="background-color:#ffc030">별점</label>
         <select class="form-select" id="star">
-            <option selected>선택하기</option>
+            <option selected>--선택하기--</option>
             <option value="1">⭐</option>
             <option value="2">⭐⭐</option>
             <option value="3">⭐⭐⭐</option>
@@ -75,22 +83,22 @@
         </select>
     </div>
     <div class="input-group mb-3">
-        <label class="input-group-text" for="ctype">구분</label>
+        <label class="input-group-text" for="ctype" style="background-color:#8ec7ff">구분</label>
         <select class="form-select" id="ctype">
-            <option selected>선택하기</option>
+            <option selected>--선택하기--</option>
             <option name="theater">theater</option>
             <option name="movies">movies</option>
             <option name="consert">consert</option>
         </select>
     </div>
     <div class="form-floating">
-        <textarea class="form-control" placeholder="Leave a comment here" id="comment"
+        <textarea class="textarea is-hovered" placeholder="comment" id="comment"
                   style="height: 100px"></textarea>
-        <label for="comment">Comments</label>
+        <label for="comment"></label>
     </div>
     <div class="mybtns">
-        <button onclick="posting()" type="button" class="btn btn-dark">기록하기</button>
-        <button onclick="close_box()" type="button" class="btn btn-outline-dark">닫기</button>
+        <button onclick="posting()" type="button" class="button is-danger">기록하기</button>
+        <button onclick="close_box()" type="button" class="button is-grouped">닫기</button>
     </div>
 </div>
 <div class="wrap">
