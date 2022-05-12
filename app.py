@@ -26,7 +26,7 @@ def home():
     token_receive = request.cookies.get('mytoken')
     try:
         payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-        print("payload" + payload)
+
         return render_template('index.html')
     except jwt.ExpiredSignatureError:
         return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
@@ -177,6 +177,14 @@ def movie_delete():
     num_receive = request.form['num_give']
     db.culture.delete_one({'num': int(num_receive)})
     return jsonify({'msg': '삭제 완료!'});
+
+
+@app.route('/detail/<num>')
+def detail(num):
+    card = db.culture.find_one({'num':int(num)},{'_id':False})
+    print(num, card)
+    return render_template("detail.html", card=card)
+
 
 
 if __name__ == '__main__':
