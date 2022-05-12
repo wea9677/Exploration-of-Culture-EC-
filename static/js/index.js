@@ -1,5 +1,14 @@
 "use strict";
 
+/* get Token Data */
+/* parseJwt($.cookie('mytoken')) 으로 사용하면 아이디 값이 전달된다. */
+const parseJwt = (token) => {
+  try {
+    return JSON.parse(atob(token.split('.')[1]));
+  } catch (e) {
+    return null;
+  }
+};
 
 function All() {
     $('#top').css({'background-image': 'linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("https://post-phinf.pstatic.net/MjAyMTA1MjRfMTQ5/MDAxNjIxODM5NjMxODM4.x9oS0lZ2R2-uhe-FrdC7BjvGj2bYXcflkCwdxTv7ahgg.ryZCrIOTJaWEMYhegrYuHlXcVJdZaKb2Dtv_FbNi9Tkg.JPEG/%EA%B3%B5%EA%B0%90-%EC%A0%95%EC%B1%85%EC%A3%BC%EA%B0%84%EC%A7%80%EA%B3%B5%EA%B0%90-%EC%9D%B4%EB%82%A0%EC%B9%98-%EC%9D%B4%EB%82%A0%EC%B9%98%EB%B0%B4%EB%93%9C-%EB%B2%94%EB%82%B4%EB%A0%A4%EC%98%A8%EB%8B%A4-%ED%95%9C%EA%B5%AD%EA%B4%80%EA%B4%91%EA%B3%B5.jpg?type=w1200")'});
@@ -82,6 +91,7 @@ function getctype(str) {
             let rows = response['posting']
             console.log(rows)
             for (let i = 0; i < rows.length; i++) {
+                let user = rows[i]['user'];
                 let num = rows[i]['num'];
                 let title = rows[i]['title']
                 let url = rows[i]['url']
@@ -100,6 +110,9 @@ function getctype(str) {
                                          <p>${star_image}</p>
                                          <p class="mycomment">${comment}</p>
                                      </div>
+                                     <footer style="text-align: right">
+                                        <div style="margin-right: 10px;">by <span style="font-weight: bold;">${user}</span>님</div>
+                                     </footer>
                                  </div>
                                  <div class="option">
                                      <a href="#" onclick="updateCard(${num});"><span class="las la-edit"></span></a>
@@ -153,9 +166,11 @@ function listing() {
         success: function (response) {
             $('#card-box').empty();
             let rows = response['posting']
+            let num;
             console.log(rows);
             for (let i = 0; i < rows.length; i++) {
-                let num = rows[i]['num'];
+                let user = rows[i]['user'];
+                num = rows[i]['num'];
                 let title = rows[i]['title']
                 let url = rows[i]['url']
                 let star = rows[i]['star']
@@ -171,6 +186,14 @@ function listing() {
                                          <p>${star_image}</p>
                                          <p class="mycomment">${comment}</p>
                                      </div>
+                                     <div class="like-icon">
+                                        <i id='likeBtn-${num}' style="display: none" class="like fa fa-heart" aria-hidden="true" onclick="javascript:like(${num}, 'dislike');"></i>
+                                        <i id='dislikeBtn-${num}'  class="dislike fa fa-heart-o" aria-hidden="true" onclick="javascript:like(${num} , 'like');"></i>                                         
+                                        <p id="getLike-${num}">0</p>
+                                    </div>
+                                     <footer style="text-align: right">
+                                        <div style="margin-right: 10px;">by <span id="user" style="font-weight: bold;">${user}</span>님</div>
+                                     </footer>
                                  </div>
                                  <div class="option">
                                      <a href="#" onclick="updateCard(${num});"><span class="las la-edit"></span></a>
@@ -179,12 +202,16 @@ function listing() {
                             </div>`;
 
                 $('#card-box').append(temp_html);
+                getlike(num);
             }
+
         }
     })
 }
 
 function posting() {
+    let token = $.cookie('mytoken');
+    let id = parseJwt(token).id;
     let url = $('#url').val()
     let title = $('#title').val()
     let star = $('#star').val()
@@ -195,7 +222,7 @@ function posting() {
     $.ajax({
         type: 'POST',
         url: '/culture',
-        data: {url_give: url, title_give: title, star_give: star, comment_give: comment, ctype_give: ctype},
+        data: {id_give:id, url_give: url, title_give: title, star_give: star, comment_give: comment, ctype_give: ctype},
         success: function (response) {
             alert(response['msg'])
             window.location.reload();
@@ -205,6 +232,13 @@ function posting() {
 }
 
 function dropList(n) {
+    let token = $.cookie('mytoken');
+    let id = parseJwt(token).id;
+    let acc = $('#user').text();
+    if(id !== acc){
+        alert('접근할 수 없습니다.')
+        return;
+    }
     $.ajax({
         type: 'DELETE',
         url: `/culture`,
@@ -217,6 +251,46 @@ function dropList(n) {
 }
 
 function updateCard(n) {
-    window.open(`http://localhost:5000/culture/update?num=${n}`, 'new', 'scrollbars=yes,resizable=no width=640 height=560, left=0,top=0\');return false')
+    let token = $.cookie('mytoken');
+    let id = parseJwt(token).id;
+    let acc = $('#user').text();
+
+    if(id === acc)
+        window.open(`http://localhost:5000/culture/update?num=${n}`, 'new', 'scrollbars=yes,resizable=no width=640 height=560, left=0,top=0\');return false')
+    else{
+        alert('접근할 수 없습니다.')
+        return;
+    }
 }
 
+function like(n, status){
+    if(status == 'like'){
+        $(`#likeBtn-${n}`).css('display', 'block');
+        $(`#dislikeBtn-${n}`).css('display', 'none');
+    }else{
+        $(`#likeBtn-${n}`).css('display', 'none')
+        $(`#dislikeBtn-${n}`).css('display', 'block');
+    }
+    $.ajax({
+        type: 'POST',
+        url: '/culture/like',
+        data: {num_give: n, action_give:status},
+        success: function (response) {
+            if(response['result'] =='success'){
+                getlike(n);
+            }
+        }
+    });
+}
+
+function getlike(n){
+    $.ajax({
+        type: 'GET',
+        url: `/culture/like?num_give=${n}`,
+        data: {},
+        success: function (response) {
+            let num = parseInt(response['like']);
+            $(`#getLike-${n}`).text(num);
+        }
+    });
+}
