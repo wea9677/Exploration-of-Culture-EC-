@@ -184,9 +184,9 @@ function listing() {
 
                 let star_image = '⭐'.repeat(star);
 
-                let temp_html = `<div class="col card-box" onclick="detail_card(${num})">
+                let temp_html = `<div class="col card-box">
                                  <div class="card h-100">
-                                     <img src="${url}" class="card-img-top">
+                                     <img src="${url}" class="card-img-top"  onclick="detail_card(${num})">
                                      <div class="card-body">
                                          <h5 class="card-title">${title}</h5>
                                          <p>${star_image}</p>
@@ -263,7 +263,7 @@ function updateCard(n) {
     let acc = $('#user').text();
 
     if(id === acc)
-        window.open(`http://localhost:5000/culture/update?num=${n}`, 'new', 'scrollbars=yes,resizable=no width=640 height=560, left=0,top=0\');return false')
+        window.open(`http://54.180.163.6/culture/update?num=${n}`, 'new', 'scrollbars=yes,resizable=no width=640 height=560, left=0,top=0\');return false')
     else{
         alert('접근할 수 없습니다.')
         return;
