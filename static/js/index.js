@@ -144,6 +144,12 @@ function open_box() {
 function close_box() {
     $('#post-box').hide()
 }
+function detail_card(num){
+    window.location.href=`/detail/${num}`
+
+}
+
+
 
 function listing() {
     $.ajax({
@@ -163,7 +169,7 @@ function listing() {
 
                 let star_image = '⭐'.repeat(star);
 
-                let temp_html = `<div class="col card-box">
+                let temp_html = `<div class="col card-box" onclick="detail_card(${num})">
                                  <div class="card h-100">
                                      <img src="${url}" class="card-img-top">
                                      <div class="card-body">
