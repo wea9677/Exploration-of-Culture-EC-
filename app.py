@@ -8,14 +8,14 @@ import hashlib
 from datetime import datetime, timedelta
 from flask import Flask, render_template, request, jsonify, url_for, redirect
 
-
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
 ca = certifi.where()
 
 SECRET_KEY = 'SPARTA'
-client = MongoClient('mongodb+srv://wea9677:tmxkdlfl@cluster0.xmzro.mongodb.net/Cluster0?retryWrites=true&w=majority', tlsCAFile=ca)
+client = MongoClient('mongodb+srv://wea9677:tmxkdlfl@cluster0.xmzro.mongodb.net/Cluster0?retryWrites=true&w=majority',
+                     tlsCAFile=ca)
 
 db = client.dbsparta
 
@@ -33,6 +33,7 @@ def home():
     except jwt.exceptions.DecodeError:
         return render_template('index.html')
 
+
 # -----login, register-----
 @app.route('/login')
 def login():
@@ -45,24 +46,20 @@ def sign_in():
     # 로그인
     username_receive = request.form['username_give']
     password_receive = request.form['password_give']
-    print(username_receive, password_receive)
     pw_hash = hashlib.sha256(password_receive.encode('utf-8')).hexdigest()
-    print(pw_hash)
     result = db.users.find_one({'username': username_receive, 'password': pw_hash})
-    print(result)
+
     if result is not None:
         payload = {
             'id': username_receive,
             'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
         }
-        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256').decode('utf-8')
-        print(token)
+        token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
         return jsonify({'result': 'success', 'token': token})
     # 찾지 못하면
     else:
         return jsonify({'result': 'fail', 'msg': '아이디/비밀번호가 일치하지 않습니다.'})
-
 
 
 @app.route('/sign_up/save', methods=['POST'])
@@ -80,13 +77,11 @@ def sign_up():
     return jsonify({'result': 'success'})
 
 
-
 @app.route('/sign_up/check_dup', methods=['POST'])
 def check_dup():
     username_receive = request.form['username_give']
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
-
 
 
 @app.route('/culture/update')
@@ -97,25 +92,13 @@ def update():
 
 @app.route('/culture', methods=['POST'])
 def web_culture_post():
+    id_receive = request.form['id_give'],
     url_recevie = request.form['url_give']
     title_recevie = request.form['title_give']
     star_recevie = request.form['star_give']
     comment_recevie = request.form['comment_give']
 
     ctype_recevie = request.form['ctype_give']
-    print(ctype_recevie)
-
-    # headers = {
-    #     'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
-    # data = requests.get(url_recevie, headers=headers)
-    #
-    # soup = BeautifulSoup(data.text, 'html.parser')
-    #
-    # og_image = soup.select_one('meta[property="og:image"]')
-    #
-    # url_recevie = og_image['content']
-    # 1. 다 가져와서 데이터를 저장해놓고 사용하는 방법
-    # 2. 그때그때 db.select();
 
     culture_list = list(db.culture.find({}, {'_id': False}))
     if len(culture_list) == 0:
@@ -123,6 +106,7 @@ def web_culture_post():
     else:
         count = culture_list[len(culture_list) - 1]['num'] + 1
     doc = {
+        'user': id_receive,
         'num': count,
         'title': title_recevie,
         'url': url_recevie,
@@ -132,7 +116,44 @@ def web_culture_post():
     }
 
     db.culture.insert_one(doc)
+    doc = {
+        'num': count,
+        'like': 0
+    }
+    db.cultureLike.insert_one(doc)
     return jsonify({'msg': '기록 완료!'})
+
+
+@app.route('/culture/like', methods=["POST"])
+def card_like():
+    num_receive = request.form['num_give']
+    action_receive = request.form['action_give']
+
+    card = db.cultureLike.find_one({'num': int(num_receive)}, {'_id': False})
+    like = card['like']
+
+    if action_receive == 'like':
+        like += 1
+        db.cultureLike.update_one({'num': int(num_receive)}, {'$set': {'like': int(like)}})
+        return jsonify({'result': 'success'})
+    else:
+        if like != 0:
+            like -= 1
+            db.cultureLike.update_one({'num': int(num_receive)}, {'$set': {'like': int(like)}})
+            return jsonify({'result': 'success'})
+        else:
+            return jsonify({'result': 'success'})
+
+
+@app.route('/culture/like', methods=['GET'])
+def card_getLike():
+    num_receive = request.args.get('num_give')
+    if num_receive != 'undefined':
+        card = db.cultureLike.find_one({'num': int(num_receive)}, {'_id': False})
+        print(card)
+        return jsonify({'like': card['like']})
+    else:
+        return jsonify()
 
 
 @app.route('/culture', methods=['GET'])
@@ -181,10 +202,42 @@ def movie_delete():
 
 @app.route('/detail/<num>')
 def detail(num):
-    card = db.culture.find_one({'num':int(num)},{'_id':False})
-    print(num, card)
+    card = db.culture.find_one({'num': int(num)}, {'_id': False})
+
     return render_template("detail.html", card=card)
 
+
+@app.route('/review/save', methods=['POST'])
+def reviews():
+    review_receive = request.form['review_give']
+    num_receive = request.form['num_give']
+    doc = {
+        "review": review_receive,
+        "num": int(num_receive)
+    }
+    print(num_receive, review_receive)
+    db.review.insert_one(doc)
+    return jsonify({'msg': '댓글 작성완료!'})
+
+
+@app.route('/review', methods=['GET'])
+def reviews_get():
+    num_receive = request.args.get('num_give')
+    review_list = list(db.review.find({'num': int(num_receive)}, {'_id': False}))
+
+    return jsonify({'reviews': review_list})
+
+
+@app.route('/review/delete', methods=['POST'])
+def review_delete():
+    num_receive = request.form['num_give']
+    review_receive = request.form["review_give"]
+
+    num_receive = int(num_receive)
+    print(num_receive, review_receive)
+    db.review.delete_one({'num': num_receive, 'review': review_receive})
+
+    return jsonify({'result': 'success'})
 
 
 if __name__ == '__main__':
