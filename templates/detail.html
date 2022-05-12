@@ -40,13 +40,67 @@
 
 
     <script>
-
+        let text
         window.onload = () => {
-            let text = {{ card|tojson }}
-                console.log(text)
-            let star_image = '⭐'.repeat(parseInt(text.star));
+            text = {{ card|tojson }};
+        let star_image = '⭐'.repeat(parseInt(text.star));
             $("#star").text(star_image)
+            get_examples()
         }
+
+        function get_examples() {
+            let num = text.num;
+            $("#review-list").empty()
+            $.ajax({
+                type: "GET",
+                url: `/review?num_give=${num}`,
+                data: {},
+                success: function (response) {
+                    console.log(response)
+                    let reviews = response["reviews"];
+                    for (let i = 0; i < reviews.length; i++) {
+                        let review = reviews[i]["review"];
+                        let html_temp = `<li id="ex-${i}">${review}.
+                        <a href="javascript:delete_ex(${i})">delete</a></li>`
+                        $("#review-list").append(html_temp)
+                    }
+                }
+            });
+        }
+
+        function add_ex() {
+            let new_ex = $('#review').val();
+            let num = text.num;
+            console.log(new_ex)
+            $.ajax({
+                type: "POST",
+                url: `/review/save`,
+                data: {review_give: new_ex, num_give: num},
+                success: function (response) {
+                    get_examples();
+                    $('#review').val("");
+                }
+            });
+
+
+        }
+
+        function delete_ex(i) {
+            let num = text.num;
+            let review = $(`#ex-${i}`).text().split('.')[0];
+            $.ajax({
+                type: "POST",
+                url: "/review/delete",
+                data: {
+                    review_give: review,
+                    num_give: num
+                },
+                success: function (response) {
+                    get_examples()
+                }
+            });
+        }
+
     </script>
 
     <style>
@@ -62,7 +116,7 @@
 
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
+            justify-content: center;
             align-items: center;
         }
 
@@ -84,6 +138,7 @@
         }
 
         .container {
+
             width: 80%;
             max-width: 800px;
             margin: 30px auto;
@@ -93,7 +148,10 @@
             border: solid 1px gray;
             border-radius: 10px;
         }
-
+        .review_box > li {
+            margin-left: 25px;
+            margin-bottom: 20px;
+        }
 
     </style>
 </head>
@@ -131,16 +189,16 @@
         </div>
 
     </div>
-    <div id="examples" class="container">
-        <h3 style="text-align: center;margin-bottom:1rem">Write your own sentences!</h3>
-        <ul id="example-list">
+    <div id="recomment" class="container" style="margin-top: 150px;">
+        <h3 style="text-align: center;margin-bottom:1rem">리뷰에 댓글을 달아주세요!</h3>
+        <ul id="review-list" class="review_box">
             <li id="ex-0">This sentence contains the word 'word'.&nbsp;&nbsp;&nbsp;<a
                     href="javascript:delete_ex(0)">delete</a></li>
             <li id="ex-1">I don't like using the MS Word program.&nbsp;&nbsp;&nbsp;<a
                     href="javascript:delete_ex(1)">delete</a></li>
         </ul>
         <div class="d-flex justify-content-between" style="margin-left:20px;">
-            <input id="new-example" class="form-control form-control-sm" style="margin-right: 0.5rem">
+            <input id="review" class="form-control form-control-sm" style="margin-right: 0.5rem">
             <button class="btn btn-outline-secondary btn-sm" onclick="add_ex()">add</button>
         </div>
     </div>
