@@ -10,6 +10,8 @@
 
 홈페이지 모습 https://www.youtube.com/watch?v=jt3XmEsdwTw
 
+홈페이지 주소 http://54.180.163.6/
+
 <br>
 
 ![logo](https://user-images.githubusercontent.com/72002228/167826678-63393ff3-578d-431d-94dc-2f948f80c4bf.png)
