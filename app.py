@@ -1,29 +1,39 @@
+import certifi
+import jwt
+import requests
+from pymongo import MongoClient
+
+import datetime
+import hashlib
+from datetime import datetime, timedelta
 from flask import Flask, render_template, request, jsonify, url_for, redirect
+
 
 app = Flask(__name__)
 app.config["TEMPLATES_AUTO_RELOAD"] = True
 
-import requests
-from bs4 import BeautifulSoup
-
-from pymongo import MongoClient
-import jwt
-import datetime
-import hashlib
-from datetime import datetime, timedelta
-import certifi
-
 ca = certifi.where()
 
 SECRET_KEY = 'SPARTA'
-client = MongoClient('mongodb+srv://wea9677:tmxkdlfl@cluster0.xmzro.mongodb.net/Cluster0?retryWrites=true&w=majority',
-                     tlsCAFile=ca)
+client = MongoClient('mongodb+srv://wea9677:tmxkdlfl@cluster0.xmzro.mongodb.net/Cluster0?retryWrites=true&w=majority', tlsCAFile=ca)
 
 db = client.dbsparta
 
 
-# -----login, register-----
+# ----- main -----
+@app.route('/')
+def home():
+    token_receive = request.cookies.get('mytoken')
+    try:
+        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
+        print("payload" + payload)
+        return render_template('index.html')
+    except jwt.ExpiredSignatureError:
+        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
+    except jwt.exceptions.DecodeError:
+        return render_template('index.html')
 
+# -----login, register-----
 @app.route('/login')
 def login():
     msg = request.args.get("msg")
@@ -64,16 +74,8 @@ def sign_up():
         "username": username_receive,  # 아이디
         "password": password_hash,  # 비밀번호
         "profile_name": username_receive,  # 프로필 이름 기본값은 아이디
-        # "profile_pic": "",                                          # 프로필 사진 파일 이름
-        # "profile_pic_real": "profile_pics/profile_placeholder.png", # 프로필 사진 기본 이미지
-        # "profile_info": ""                                          # 프로필 한 마디
     }
     db.users.insert_one(doc)
-    # payload = {
-    #     'id': username_receive,
-    #     'exp': datetime.utcnow() + timedelta(seconds=60 * 60 * 24)  # 로그인 24시간 유지
-    # }
-    # token = jwt.encode(payload, SECRET_KEY, algorithm='HS256')
 
     return jsonify({'result': 'success'})
 
@@ -84,23 +86,6 @@ def check_dup():
     username_receive = request.form['username_give']
     exists = bool(db.users.find_one({"username": username_receive}))
     return jsonify({'result': 'success', 'exists': exists})
-
-
-
-# -------main-------
-
-@app.route('/')
-def home():
-    token_receive = request.cookies.get('mytoken')
-    try:
-        payload = jwt.decode(token_receive, SECRET_KEY, algorithms=['HS256'])
-
-        return render_template('index.html')
-    except jwt.ExpiredSignatureError:
-        return redirect(url_for("login", msg="로그인 시간이 만료되었습니다."))
-    except jwt.exceptions.DecodeError:
-        return render_template('index.html')
-    return render_template('index.html')
 
 
 
