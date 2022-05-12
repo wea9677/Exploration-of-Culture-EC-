@@ -53,7 +53,7 @@ function login() {
 }
 
 function sign_up() {
-    window.location.href = '/signup';
+    window.location.href = '/login?msg=signUp';
 }
 
 function checkStatus() {
