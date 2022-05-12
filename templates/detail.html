@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta property="og:title" content="문화탐방">
+    <meta property="og:description" content="재밌는건 나누자고! 문탐에 남겨줘 너의 원픽 문화생활!">
+    <meta property="og:image" content="../static/logo.png">
+
+
+    <link rel="icon" type="image/png" sizes="192x192" href="/static/favicon/android-icon-192x192.png">
+
+
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+
+    <!-- icons8 -->
+    <link rel="stylesheet"
+          href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Gowun+Dodum&display=swap" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hi+Melody&family=Jua&display=swap');
+    </style>
+    <title>문탐-문화탐방</title>
+    <link rel="stylesheet" href="../static/css/index.css">
+
+
+    <script>
+
+        window.onload = () => {
+            let text = {{ card|tojson }}
+                console.log(text)
+            let star_image = '⭐'.repeat(parseInt(text.star));
+            $("#star").text(star_image)
+        }
+    </script>
+
+    <style>
+        .section1 {
+            color: white;
+            width: 100%;
+            height: 350px;
+
+            background-image: linear-gradient(0deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)), url("https://assets.teenvogue.com/photos/5d34abc9d4f0850008e33d4f/16:9/w_2560%2Cc_limit/GettyImages-584925310.jpg");
+            background-size: cover;
+            background-position: center 20%;
+            background-color: black;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+        }
+
+        .image_box {
+            min-width: 400px;
+            height: 200px;
+            background-image: url(/static/logo.png);
+            background-size: cover;
+
+        }
+
+        .detail_card {
+
+            margin: 20px auto;
+            width: 400px;
+            height: 600px;
+            background-color: red;
+
+        }
+
+        .container {
+            width: 80%;
+            max-width: 800px;
+            margin: 30px auto;
+            padding: 20px;
+            background-color: white;
+
+            border: solid 1px gray;
+            border-radius: 10px;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+<div class="section1">
+    <!--    <div class="d-grid gap-2 d-md-block menu_box">-->
+    <!--        <button id="loginBtn" class="btn btn-primary" type="button" onclick="login()">로그인</button>-->
+    <!--        <button id="signUpBtn" class="btn btn-primary" type="button" onclick="sign_up()">회원가입</button>-->
+    <!--    </div>-->
+    <a href="/">
+        <div class="image_box"></div>
+    </a>
+    <!--      <h1 style="font-width: bold;"><span style="color:orangered">문</span>화</h1>-->
+    <!--      <h1 style="font-width: bold;"><span style="color:orangered">탐</span>방</h1>-->
+    <!--    <button type="button" class="button is-warning" onclick="open_box()"-->
+    <!--            style="font-family: 'Jua', sans-serif; font-size:25px">문탐 기록하기-->
+    <!--    </button>-->
+
+</div>
+<div class="wrap">
+    <div class="detail_card">
+        <div class="col card-box" style="margin-bottom: 20px;">
+            <div class="card h-100">
+
+                <img src="{{ card.url }}" class="card-img-top">
+                <div class="card-body">
+                    <h5 class="card-title">{{ card.title }}</h5>
+                    <p id="star">{{ card.star }}</p>
+                    <p class="mycomment">{{ card.comment }}</p>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+    <div id="examples" class="container">
+        <h3 style="text-align: center;margin-bottom:1rem">Write your own sentences!</h3>
+        <ul id="example-list">
+            <li id="ex-0">This sentence contains the word 'word'.&nbsp;&nbsp;&nbsp;<a
+                    href="javascript:delete_ex(0)">delete</a></li>
+            <li id="ex-1">I don't like using the MS Word program.&nbsp;&nbsp;&nbsp;<a
+                    href="javascript:delete_ex(1)">delete</a></li>
+        </ul>
+        <div class="d-flex justify-content-between" style="margin-left:20px;">
+            <input id="new-example" class="form-control form-control-sm" style="margin-right: 0.5rem">
+            <button class="btn btn-outline-secondary btn-sm" onclick="add_ex()">add</button>
+        </div>
+    </div>
+</div>
+
+</div>
+
+
+</body>
+</html>
