@@ -7,6 +7,9 @@
 
 ## 문탐 로고!<br>
 <br>
+
+홈페이지 모습 https://www.youtube.com/watch?v=jt3XmEsdwTw
+
 <br>
 
 ![logo](https://user-images.githubusercontent.com/72002228/167826678-63393ff3-578d-431d-94dc-2f948f80c4bf.png)
@@ -52,6 +55,7 @@
 - 리뷰포스팅 수정
 - 리뷰포스팅 삭제
 - 리뷰포스팅 댓글달기
+- 좋아요 버튼 및 작성자 표시
 
 <br>
 <br>
