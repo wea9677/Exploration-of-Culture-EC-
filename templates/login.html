@@ -22,13 +22,20 @@
 
 
     <script src="../static/js/login.js"></script>
-
+    <script>
+        let status = {{ msg|tojson }};
+        window.onload = ()=>{
+            if(status === 'signUp'){
+                toggle_sign_up();
+            }
+        }
+    </script>
 
 </head>
 <body>
 
 
-<div class="section1">
+<div class="section1" >
 
     <a href="/">
         <div class="image_box"></div>
