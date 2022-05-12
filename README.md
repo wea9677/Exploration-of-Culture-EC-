@@ -63,7 +63,7 @@
 - Server: AWS EC2 (Ubuntu 18.04 LTS)
 - Framework: Flask (Python)
 - Database: MongoDB
-- Language : HTML5, CSS3, Javascript
+- Languages : HTML5, CSS3, Javascript
 - ETC : Git, Notion
 
 <br>
