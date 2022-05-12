@@ -19,6 +19,9 @@
     <!-- icons8 -->
     <link rel="stylesheet"
           href="https://maxst.icons8.com/vue-static/landings/line-awesome/line-awesome/1.3.0/css/line-awesome.min.css">
+    <!-- font-awesome icon -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+
     <!-- Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
@@ -38,29 +41,28 @@
     <title>문탐-문화탐방</title>
     <link rel="stylesheet" href="../static/css/index.css">
     <script src="../static/js/index.js"></script>
-
-
 </head>
 <body>
-<div class="section1">
+<div class="section1" id="top">
     <div class="d-grid gap-2 d-md-block menu_box">
-        <button id="loginBtn" class="btn btn-primary" type="button" onclick="login()">로그인</button>
-        <button id="signUpBtn" class="btn btn-primary" type="button" onclick="sign_up()">회원가입</button>
+        <button id="loginBtn" class="button is-sparta" type="button" onclick="login()">로그인</button>
+        <button id="signUpBtn" class="button is-sparta is-outlined" type="button" onclick="sign_up()">회원가입</button>
     </div>
     <a href="#">
         <div class="image_box"></div>
     </a>
-    <!--      <h1 style="font-width: bold;"><span style="color:orangered">문</span>화</h1>-->
-    <!--      <h1 style="font-width: bold;"><span style="color:orangered">탐</span>방</h1>-->
-    <button type="button" class="button is-warning" onclick="open_box()" style="font-family: 'Jua', sans-serif; font-size:25px">문탐 기록하기</button>
-
+    <button type="button" class="writeBtn btn-outline-dark" onclick="open_box()"><i class="icon fa fa-pencil-square-o"
+                                                                                    aria-hidden="true"></i>기록하기
+    </button>
 </div>
-<div class="category">
-    <button class="btn A_btn" type="button" onclick="All()">All</button>
-    <button class="btn T_btn" type="button" onclick="theater()">Theater</button>
-    <button class="btn M_btn" type="button" onclick="movies()">Movies</button>
-    <button class="btn C_btn" type="button" onclick="consert()">Consert</button>
 
+<div class="category">
+    <ul>
+        <li><a href="javascript:All()">All</a></li>
+        <li><a href="javascript:theater()">Theater</a></li>
+        <li><a href="javascript:movies()">Movies</a></li>
+        <li><a href="javascript:consert()">Consert</a></li>
+    </ul>
 </div>
 <div class="section2" id="post-box">
     <div class="form-floating mb-2">
